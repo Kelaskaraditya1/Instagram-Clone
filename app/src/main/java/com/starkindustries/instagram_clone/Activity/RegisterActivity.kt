@@ -30,7 +30,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.R
 import com.starkindustries.instagram_clone.databinding.ActivityRegisterBinding
-
 class RegisterActivity : AppCompatActivity() {
     lateinit var binding:ActivityRegisterBinding
     lateinit var auth:FirebaseAuth
@@ -141,6 +140,7 @@ class RegisterActivity : AppCompatActivity() {
                                 map.put(Keys.PHOTO_URI,binding.registerProfileImageViewer.getTag().toString().trim())
                                 map.put(Keys.USERNAME,binding.registerUsername.text.toString().trim())
                                 map.put(Keys.PASSWORD,binding.registerPassword.text.toString().trim())
+                                map.put(Keys.SIGNIN_TYPE,Keys.EMAIL_AND_PASSWORD_SIGNIN_TYPE)
                                 docrefrence.set(map).addOnCompleteListener()
                                 {
                                  if(it.isSuccessful)

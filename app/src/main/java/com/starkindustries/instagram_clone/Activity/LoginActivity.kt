@@ -22,6 +22,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.R
 import com.starkindustries.instagram_clone.databinding.ActivityLoginBinding
@@ -35,12 +37,15 @@ class LoginActivity : AppCompatActivity() {
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
     lateinit var googleSignInClient: GoogleSignInClient
+    lateinit var firebaseFirestore:FirebaseFirestore
+    lateinit var docRefrence:DocumentReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
         binding=DataBindingUtil.setContentView(this,R.layout.activity_login)
         auth=FirebaseAuth.getInstance()
+        firebaseFirestore=FirebaseFirestore.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.DEFAULT_GOOGLE_SIGNIN_ID))
             .requestEmail()
@@ -110,7 +115,8 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }.addOnFailureListener()
                 {
-                    Toast.makeText(applicationContext, " "+it.message.toString().trim(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Check your Internet connection!!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Either Email or Password is incorrect.", Toast.LENGTH_SHORT).show()
                 }
         }
         googleSignInClient=GoogleSignIn.getClient(this,gso)
@@ -147,9 +153,25 @@ class LoginActivity : AppCompatActivity() {
                                 editor.apply()
                                 user =auth.currentUser!!
                                 val intent = Intent(this,DashBoardActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                                Toast.makeText(applicationContext, "Salam "+user.displayName.toString().trim()+" bhai!!", Toast.LENGTH_SHORT).show()
+                                docRefrence=firebaseFirestore.collection(Keys.COLLECTION_NAME).document(user.uid)
+                                val map = mutableMapOf<String,Any>()
+                                map.put(Keys.USERNAME,user.displayName.toString().trim())
+                                map.put(Keys.EMAIL,user.email.toString().trim())
+                                map.put(Keys.PHOTO_URI,user.photoUrl.toString().trim())
+                                map.put(Keys.PHONE_NO,user.phoneNumber.toString().trim())
+                                map.put(Keys.SIGNIN_TYPE,Keys.GOOGLE_SIGNIN_TYPE)
+                                docRefrence.set(map).addOnCompleteListener()
+                                {
+                                 if(it.isSuccessful)
+                                 {
+                                     startActivity(intent)
+                                     finish()
+                                     Toast.makeText(applicationContext, "Salam "+user.displayName.toString().trim()+" bhai!!", Toast.LENGTH_SHORT).show()
+                                 }
+                                }.addOnFailureListener()
+                                {
+                                    Log.d("ErrorListner"," "+it.message.toString().trim())
+                                }
                             }
                         }.addOnFailureListener()
                         {

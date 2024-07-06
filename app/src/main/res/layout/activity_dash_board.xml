@@ -8,36 +8,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Activity.DashBoardActivity">
-        <androidx.appcompat.widget.AppCompatTextView
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:text="Dashboard Screen"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textAppearance="@color/black">
-        </androidx.appcompat.widget.AppCompatTextView>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/logoutButton"
+            android:layout_marginBottom="80dp">
+        </FrameLayout>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintVertical_bias="0.8"
-            android:layout_margin="10dp"
-            android:text="Logout"
-            android:textAppearance="@color/black"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/black">
-        </androidx.appcompat.widget.AppCompatButton>
+            app:layout_constraintVertical_bias="1"
+            app:menu="@menu/bottom_nav_menu_file">
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

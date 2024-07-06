@@ -3,6 +3,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -56,8 +57,10 @@ class MainActivity : AppCompatActivity() {
             editor=sharedPreferences.edit()
             if(auth.currentUser!=null&&sharedPreferences.getBoolean(Keys.LOGIN_STATUS,false))
             {
+                user=auth.currentUser!!
                 val intent = Intent(this@MainActivity,DashBoardActivity::class.java)
                 startActivity(intent)
+                Toast.makeText(applicationContext, "Salam "+user.displayName.toString().trim()+" bhai!!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             else
