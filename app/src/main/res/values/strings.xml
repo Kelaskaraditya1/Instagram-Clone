@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Instagram-Clone</string>
+    <string name="DEFAULT_GOOGLE_SIGNIN_ID">637226748481-nc7coneml27cnt99qbq3iv089i012bmu.apps.googleusercontent.com</string>
 </resources>

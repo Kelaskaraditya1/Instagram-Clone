@@ -25,6 +25,7 @@
             </androidx.appcompat.widget.AppCompatImageView>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/registerProfileImageViewer"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:src="@drawable/profile"
@@ -35,6 +36,7 @@
             app:layout_constraintVertical_bias="0.15">
         </de.hdodenhof.circleimageview.CircleImageView>
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/registerProfileImage"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:src="@drawable/plus"
@@ -61,12 +63,14 @@
                 android:padding="5dp"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="@color/black"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
+                    android:inputType="text"
                     android:hint="Name">
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
@@ -76,10 +80,12 @@
                 android:padding="5dp"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerEmail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="@color/black"
                     android:textSize="18sp"
+                    android:inputType="textEmailAddress"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:hint="Email">
@@ -91,10 +97,12 @@
                 android:padding="5dp"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerPhoneNo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="@color/black"
                     android:textSize="18sp"
+                    android:inputType="number"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:hint="Phone No">
@@ -106,10 +114,12 @@
                 android:padding="5dp"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerUsername"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="@color/black"
                     android:textSize="18sp"
+                    android:inputType="text"
                     android:textColor="@color/black"
                     android:textColorHint="@color/black"
                     android:hint="Username">
@@ -121,6 +131,7 @@
                 android:padding="5dp"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registerPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="@color/black"
@@ -132,6 +143,7 @@
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/registerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Signup"
@@ -163,6 +175,7 @@
                     android:layout_marginTop="33dp">
                 </androidx.appcompat.widget.AppCompatTextView>
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/loginButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"

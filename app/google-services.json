@@ -12,7 +12,20 @@
           "package_name": "com.starkindustries.instagram_clone"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "637226748481-udkf0fv929o4ias505fu3qfejg448opf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.starkindustries.instagram_clone",
+            "certificate_hash": "2ad942b31b611fc40f848f9626942b0a9b888309"
+          }
+        },
+        {
+          "client_id": "637226748481-nc7coneml27cnt99qbq3iv089i012bmu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCVtXv09QYHNHEJyTkORQZyeo8g-T2uFsc"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637226748481-nc7coneml27cnt99qbq3iv089i012bmu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

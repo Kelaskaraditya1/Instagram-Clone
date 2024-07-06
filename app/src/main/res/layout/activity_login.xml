@@ -42,6 +42,7 @@
                 android:padding="5dp"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginUsername"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="@color/black"
@@ -57,6 +58,7 @@
                 android:padding="5dp"
                 style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox.Dense">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/loginPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="@color/black"
@@ -68,6 +70,7 @@
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/LoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Signin"
@@ -82,6 +85,7 @@
                 android:textStyle="bold">
             </androidx.appcompat.widget.AppCompatButton>
             <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/forgotPasswordButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Forgot password?"
@@ -126,9 +130,68 @@
                     android:layout_gravity="center"
                     android:background="@color/black">
                 </View>
-
-
             </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_marginTop="20dp">
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/googleSigninButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                </com.google.android.gms.common.SignInButton>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1.5"
+                android:layout_gravity="center"
+                android:background="@color/black"
+                android:layout_marginTop="40dp">
+            </View>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            android:orientation="horizontal"
+            android:layout_marginStart="35dp">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="Don't have an account?"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black"
+                android:layout_marginTop="33dp">
+            </androidx.appcompat.widget.AppCompatTextView>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signUpButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Signup"
+                android:textStyle="bold"
+                android:textColor="#34B3F8"
+                android:textSize="20sp"
+                android:textAppearance="@color/white"
+                android:textAlignment="textStart"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginStart="-15dp">
+            </androidx.appcompat.widget.AppCompatButton>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
