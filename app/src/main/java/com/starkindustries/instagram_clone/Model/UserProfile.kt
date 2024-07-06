@@ -8,6 +8,7 @@ class UserProfile
     lateinit var password:String
     lateinit var photoUri:String
     lateinit var signintype:String
+    lateinit var bio:String
     constructor(name_:String,email_:String,phoneNo_:String,username_:String,password_:String,photoUri_:String,signintype_:String)
     {
         this.name=name_

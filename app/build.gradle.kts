@@ -43,6 +43,7 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.google.android.material:compose-theme-adapter:1.2.1")
+    implementation("com.squareup.picasso:picasso:2.71828")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
