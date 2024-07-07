@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.starkindustries.instagram_clone.R
+import com.starkindustries.instagram_clone.Utility.MyBottomSheetDialogFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AddFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AddFragment : Fragment() {
+class AddFragment : BottomSheetDialogFragment()  {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -37,6 +39,13 @@ class AddFragment : Fragment() {
         // Inflate the layout for this fragment
         val view:View= inflater.inflate(R.layout.fragment_add, container, false)
         return view
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Show BottomSheetDialogFragment automatically
+        val bottomSheet = MyBottomSheetDialogFragment()
+        bottomSheet.show(childFragmentManager, bottomSheet.tag)
     }
 
     companion object {

@@ -4,7 +4,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.starkindustries.instagram_clone.Fragments.MyPostsFragment
 import com.starkindustries.instagram_clone.Fragments.MyReelsFragment
-class ProfileViewPagerAdapter(var manager:FragmentManager):FragmentPagerAdapter(manager)
+class ProfileViewPagerAdapter(var manager:FragmentManager):FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT)
 {
     override fun getCount(): Int {
         return 2
