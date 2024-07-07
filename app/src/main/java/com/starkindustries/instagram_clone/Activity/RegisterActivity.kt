@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.R
 import com.starkindustries.instagram_clone.databinding.ActivityRegisterBinding
@@ -39,6 +41,8 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var docrefrence:DocumentReference
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: SharedPreferences.Editor
+    lateinit var storageRefrence:StorageReference
+    lateinit var childRefrence:StorageReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -123,14 +127,12 @@ class RegisterActivity : AppCompatActivity() {
                     if(it.isSuccessful)
                     {
                         user=auth.currentUser!!
-                        val update = UserProfileChangeRequest.Builder()
-                            .setDisplayName(binding.registerUsername.text.toString().trim())
-                            .setPhotoUri(binding.registerProfileImageViewer.getTag() as Uri)
-                            .build()
-                        user.updateProfile(update).addOnCompleteListener()
+                        storageRefrence=FirebaseStorage.getInstance().reference
+                        childRefrence=storageRefrence.child(binding.registerName.text.toString().trim()+"/"+user.uid+"/"+Keys.IMAGES+"/"+Keys.USER_PROFILE_IMAGE)
+                        childRefrence.putFile(binding.registerProfileImageViewer.getTag() as Uri).addOnSuccessListener()
                         {
-                            if(it.isSuccessful)
-                            {
+                            it.storage.downloadUrl.addOnSuccessListener {
+                                uri->
                                 firestore=FirebaseFirestore.getInstance()
                                 docrefrence=firestore.collection(Keys.COLLECTION_NAME).document(user.uid)
                                 val map = mutableMapOf<String,Any>()
@@ -138,24 +140,40 @@ class RegisterActivity : AppCompatActivity() {
                                 map.put(Keys.EMAIL,binding.registerEmail.text.toString().trim())
                                 map.put(Keys.PHONE_NO,binding.registerPhoneNo.text.toString().trim())
                                 map.put(Keys.PHOTO_URI,binding.registerProfileImageViewer.getTag().toString().trim())
+                                map.put(Keys.DOWNLOAD_URL,uri.toString().trim())
                                 map.put(Keys.USERNAME,binding.registerUsername.text.toString().trim())
                                 map.put(Keys.PASSWORD,binding.registerPassword.text.toString().trim())
                                 map.put(Keys.SIGNIN_TYPE,Keys.EMAIL_AND_PASSWORD_SIGNIN_TYPE)
                                 docrefrence.set(map).addOnCompleteListener()
                                 {
-                                 if(it.isSuccessful)
-                                 {
-                                     sharedPreferences=getSharedPreferences(Keys.SHARED_PREFRENCES_NAME, MODE_PRIVATE)
-                                     editor=sharedPreferences.edit()
-                                     editor.putBoolean(Keys.LOGIN_STATUS,true)
-                                     editor.apply()
-                                     val intent = Intent(this,DashBoardActivity::class.java)
-                                     startActivity(intent)
-                                     finish()
-                                 }
+                                    if(it.isSuccessful)
+                                    {
+                                        val update = UserProfileChangeRequest.Builder()
+                                            .setDisplayName(binding.registerUsername.text.toString().trim())
+                                            .setPhotoUri(uri)
+                                            .build()
+                                        user.updateProfile(update).addOnCompleteListener()
+                                        {
+                                            if(it.isSuccessful)
+                                            {
+                                                sharedPreferences=getSharedPreferences(Keys.SHARED_PREFRENCES_NAME, MODE_PRIVATE)
+                                                editor=sharedPreferences.edit()
+                                                editor.putBoolean(Keys.LOGIN_STATUS,true)
+                                                editor.apply()
+                                                val intent = Intent(this,DashBoardActivity::class.java)
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                        }.addOnFailureListener()
+                                        {
+                                            Log.d("ErrorListner"," "+it.message.toString().trim())
+                                        }
+                                    }
                                 }.addOnFailureListener {
                                     Log.d("ErrorListner"," "+it.message.toString().trim())
                                 }
+                            }.addOnFailureListener {
+                                Log.d("ErrorListner"," "+it.message.toString().trim())
                             }
                         }.addOnFailureListener()
                         {

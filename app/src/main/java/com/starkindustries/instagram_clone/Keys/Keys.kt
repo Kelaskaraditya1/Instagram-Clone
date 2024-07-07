@@ -19,5 +19,9 @@ class Keys
         const val SIGNIN_TYPE="SIGNIN_TYPE"
         const val GOOGLE_SIGNIN_TYPE="GOOGLE_SIGNIN_TYPE"
         const val EMAIL_AND_PASSWORD_SIGNIN_TYPE="EMAIL_AND_PASSWORD_SIGNIN_TYPE"
+        const val IMAGES="IMAGES"
+        const val USER_PROFILE_IMAGE="USER_PROFILE_IMAGE"
+        const val DOWNLOAD_URL="DOWNLOAD_URL"
+
     }
 }
