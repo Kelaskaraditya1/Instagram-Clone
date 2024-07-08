@@ -73,7 +73,6 @@ class ReelsActivity : AppCompatActivity() {
         {
             progressDialog= ProgressDialog(applicationContext)
             progressDialog.setTitle("Uploading your reel")
-//            progressDialog.show()
             auth=FirebaseAuth.getInstance()
             user=auth.currentUser!!
             firebaseFireStore=FirebaseFirestore.getInstance()
