@@ -13,6 +13,7 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -126,6 +127,12 @@ class RegisterActivity : AppCompatActivity() {
                 {
                     if(it.isSuccessful)
                     {
+                        val view = this.currentFocus
+                        if(view!=null)
+                        {
+                            val manager: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                            manager.hideSoftInputFromWindow(view.windowToken,0)
+                        }
                         user=auth.currentUser!!
                         storageRefrence=FirebaseStorage.getInstance().reference
                         childRefrence=storageRefrence.child(binding.registerName.text.toString().trim()+"/"+user.uid+"/"+Keys.IMAGES+"/"+Keys.USER_PROFILE_IMAGE)

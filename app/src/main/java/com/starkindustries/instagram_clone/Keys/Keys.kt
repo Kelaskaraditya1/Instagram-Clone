@@ -22,6 +22,9 @@ class Keys
         const val IMAGES="IMAGES"
         const val USER_PROFILE_IMAGE="USER_PROFILE_IMAGE"
         const val DOWNLOAD_URL="DOWNLOAD_URL"
-
+        const val POSTS_COLLECTIONS="POSTS_COLLECTIONS"
+        const val POSTS="POSTS"
+        const val CAPTION="CAPTION"
+        const val TITLE="TITLE"
     }
 }

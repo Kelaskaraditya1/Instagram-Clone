@@ -4,15 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.MyPostsFragment">
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="My Posts Fragment"
-        android:textStyle="bold"
-        android:textAlignment="center"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:textAppearance="@color/black"
-        android:textColor="@color/black">
-    </TextView>
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
 </FrameLayout>

@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -103,6 +104,12 @@ class LoginActivity : AppCompatActivity() {
                 {
                     if(it.isSuccessful)
                     {
+                        val view = this.currentFocus
+                        if(view!=null)
+                        {
+                            val manager:InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                            manager.hideSoftInputFromWindow(view.windowToken,0)
+                        }
                         sharedPreferences=getSharedPreferences(Keys.SHARED_PREFRENCES_NAME, MODE_PRIVATE)
                         editor=sharedPreferences.edit()
                         editor.putBoolean(Keys.LOGIN_STATUS,true)
