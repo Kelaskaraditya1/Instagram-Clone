@@ -26,5 +26,7 @@ class Keys
         const val POSTS="POSTS"
         const val CAPTION="CAPTION"
         const val TITLE="TITLE"
+        const val REELS="REElS"
+        const val REELS_COLLECTION="REELS_COLLECTIONS"
     }
 }

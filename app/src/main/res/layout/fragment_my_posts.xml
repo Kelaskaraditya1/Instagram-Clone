@@ -9,4 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/noPosts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:text="No Posts uploaded yet."
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:textAppearance="@color/black"
+        android:visibility="gone">
+    </androidx.appcompat.widget.AppCompatTextView>
 </FrameLayout>

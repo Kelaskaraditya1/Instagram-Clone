@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.starkindustries.instagram_clone.Activity.DashBoardActivity
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.Model.Posts
 import com.starkindustries.instagram_clone.R
@@ -89,7 +90,7 @@ class PostsActivity : AppCompatActivity() {
                             {
                                 if(it.isSuccessful)
                                 {
-                                    docRefrence=firebaseFireStore.collection(user.uid).document()
+                                    docRefrence=firebaseFireStore.collection(user.uid+Keys.POSTS).document()
                                     docRefrence.set(post).addOnCompleteListener()
                                     {
                                         if(it.isSuccessful)
@@ -98,6 +99,8 @@ class PostsActivity : AppCompatActivity() {
                                             binding.viewPost.visibility=View.GONE
                                             binding.title.setText("")
                                             binding.caption.setText(" ")
+                                            val intent = Intent(applicationContext,DashBoardActivity::class.java)
+                                            startActivity(intent)
                                             Toast.makeText(applicationContext, "uploaded in firebasefirestore successfully", Toast.LENGTH_SHORT).show()
                                         }
                                     }.addOnFailureListener {
@@ -115,6 +118,11 @@ class PostsActivity : AppCompatActivity() {
                     }
                 }
             })
+        }
+        binding.cancelButton.setOnClickListener()
+        {
+            val intent = Intent(applicationContext,DashBoardActivity::class.java)
+            startActivity(intent)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

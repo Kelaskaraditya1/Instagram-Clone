@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +16,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.starkindustries.instagram_clone.Adapter.MyPostsAdapter
+import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.Model.Posts
 import com.starkindustries.instagram_clone.R
 
@@ -35,6 +37,7 @@ class MyPostsFragment : Fragment() {
     lateinit var firebaseFirestore:FirebaseFirestore
     lateinit var docRefrence:CollectionReference
     lateinit var postsList:ArrayList<Posts>
+    lateinit var noPosts:AppCompatTextView
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -57,17 +60,27 @@ class MyPostsFragment : Fragment() {
         auth=FirebaseAuth.getInstance()
         user=auth.currentUser!!
         firebaseFirestore=FirebaseFirestore.getInstance()
-        docRefrence=firebaseFirestore.collection(user.uid!!)
+        docRefrence=firebaseFirestore.collection(user.uid!!+Keys.POSTS)
         postsList= ArrayList<Posts>()
+        noPosts=view.findViewById(R.id.noPosts)
         docRefrence.get().addOnSuccessListener {
                 for(posts in it.documents)
                 {
                     val post: Posts? = posts.toObject<Posts>()
                     postsList.add(post!!)
                 }
-            val adapter=MyPostsAdapter(requireContext(),postsList)
-            recyclerView.layoutManager=StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
-            recyclerView.adapter=adapter
+            if(postsList.size!=0)
+            {
+                noPosts.visibility=View.GONE
+                val adapter=MyPostsAdapter(requireContext(),postsList)
+                recyclerView.layoutManager=StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
+                recyclerView.adapter=adapter
+            }
+            else
+            {
+             noPosts.visibility=View.VISIBLE
+             recyclerView.visibility=View.GONE
+            }
         }.addOnFailureListener {
             Log.d("ErrorListner"," "+it.message.toString().trim())
         }
