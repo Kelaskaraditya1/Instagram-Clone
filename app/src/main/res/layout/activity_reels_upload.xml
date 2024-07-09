@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activity.ReelsUploadActivity">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            android:padding="10dp"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/videoButton"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Video Button"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ProfileImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Profile Image Button"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black">
+            </androidx.appcompat.widget.AppCompatButton>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/reelName"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@color/black"
+                android:textSize="20sp"
+                android:hint="Name"
+                android:textColorHint="@color/black">
+            </androidx.appcompat.widget.AppCompatEditText>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/captionEdittext"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@color/black"
+                android:textSize="20sp"
+                android:hint="Capption"
+                android:textColorHint="@color/black">
+            </androidx.appcompat.widget.AppCompatEditText>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/uploadButton"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Upload Button"
+                android:textSize="20sp"
+                android:textAlignment="center"
+                android:textAppearance="@color/black"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp">
+            </androidx.appcompat.widget.AppCompatButton>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
