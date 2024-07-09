@@ -4,6 +4,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.VideoView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +24,12 @@ open class ReelsAdapter (var context_:Context,var reelsList_:ArrayList<ReelsMode
         lateinit var videoView:VideoView
         lateinit var reelProfileImage:CircleImageView
         lateinit var reelCaption:AppCompatTextView
+        lateinit var progressBar:ProgressBar
         init {
             videoView=view.findViewById(R.id.videoView)
             reelProfileImage=view.findViewById(R.id.reelProfileImage)
             reelCaption=view.findViewById(R.id.reelCaption)
+            progressBar=view.findViewById(R.id.progressBar)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,6 +48,7 @@ open class ReelsAdapter (var context_:Context,var reelsList_:ArrayList<ReelsMode
         holder.videoView.setVideoPath(reelsList.get(position).downlloadUrl)
         holder.videoView.setOnPreparedListener()
         {
+            holder.progressBar.visibility=View.GONE
             holder.videoView.start()
         }
     }

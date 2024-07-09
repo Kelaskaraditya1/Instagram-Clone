@@ -1,12 +1,21 @@
 package com.starkindustries.instagram_clone.Fragments
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.firestore
+import com.starkindustries.instagram_clone.Adapter.PostsListAdapter
+import com.starkindustries.instagram_clone.Keys.Keys
+import com.starkindustries.instagram_clone.Model.Posts
 import com.starkindustries.instagram_clone.R
-
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -18,6 +27,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
+    lateinit var homeToolbar:MaterialToolbar
+    lateinit var postsRecyclerView:RecyclerView
+    lateinit var auth:FirebaseAuth
+    lateinit var user: FirebaseUser
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -27,15 +40,34 @@ class HomeFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+            setHasOptionsMenu(true)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view:View =  inflater.inflate(R.layout.fragment_home, container, false)
+        homeToolbar=view.findViewById(R.id.homeToolbar)
+        (activity as AppCompatActivity).setSupportActionBar(homeToolbar)
+        (activity as AppCompatActivity).supportActionBar?.setTitle("Instagram")
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        postsRecyclerView=view.findViewById(R.id.postsRecyclerView)
+        auth=FirebaseAuth.getInstance()
+        user=auth.currentUser!!
+        Firebase.firestore.collection(user.uid+Keys.POSTS).get().addOnSuccessListener {
+            val postsList:ArrayList<Posts> = ArrayList<Posts>()
+            for(posts in it.documents)
+            {
+                val post = posts.toObject(Posts::class.java)
+                postsList.add(post!!)
+            }
+            postsRecyclerView.layoutManager=LinearLayoutManager(requireContext())
+            postsRecyclerView.adapter=PostsListAdapter(requireContext(),postsList)
+        }.addOnFailureListener {
+
+        }
         return view
     }
     companion object {

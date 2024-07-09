@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.InstagramClone" parent="Base.Theme.InstagramClone" />
+    <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/custom_progress_bar</item>
+    </style>
 </resources>

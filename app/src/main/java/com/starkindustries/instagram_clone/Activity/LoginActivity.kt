@@ -164,7 +164,7 @@ class LoginActivity : AppCompatActivity() {
                                 val map = mutableMapOf<String,Any>()
                                 map.put(Keys.USERNAME,user.displayName.toString().trim())
                                 map.put(Keys.EMAIL,user.email.toString().trim())
-                                map.put(Keys.PHOTO_URI,user.photoUrl.toString().trim())
+                                map.put(Keys.DOWNLOAD_URL,user.photoUrl.toString().trim())
                                 map.put(Keys.PHONE_NO,user.phoneNumber.toString().trim())
                                 map.put(Keys.SIGNIN_TYPE,Keys.GOOGLE_SIGNIN_TYPE)
                                 docRefrence.set(map).addOnCompleteListener()

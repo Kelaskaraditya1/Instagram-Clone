@@ -76,6 +76,7 @@ class PostsActivity : AppCompatActivity() {
             docRefrence.addSnapshotListener(object:EventListener<DocumentSnapshot>{
                 override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
                     storageRefrence=FirebaseStorage.getInstance().reference
+                    val name:String = value?.getString(Keys.USERNAME)!!
                     childRefrence=storageRefrence.child(value?.getString(Keys.NAME)+"/"+user.uid+"/"+Keys.POSTS+"/"+binding.title.text.toString().trim())
                     childRefrence.putFile(postUri).addOnSuccessListener {
                         it.storage.downloadUrl.addOnSuccessListener {
@@ -83,7 +84,7 @@ class PostsActivity : AppCompatActivity() {
                             map.put(Keys.TITLE,binding.title.text.toString().trim())
                             map.put(Keys.CAPTION,binding.caption.text.toString().trim())
                             map.put(Keys.DOWNLOAD_URL,it.toString().trim())
-                            val post:Posts = Posts(it.toString().trim(),binding.caption.text.toString().trim(),binding.title.text.toString().trim())
+                            val post:Posts = Posts(it.toString().trim(),binding.caption.text.toString().trim(),binding.title.text.toString().trim(),user.uid,System.currentTimeMillis().toString().trim())
                             firebaseFireStore=FirebaseFirestore.getInstance()
                             docRefrence=firebaseFireStore.collection(Keys.POSTS_COLLECTIONS).document(user.uid)
                             docRefrence.set(post).addOnCompleteListener()
