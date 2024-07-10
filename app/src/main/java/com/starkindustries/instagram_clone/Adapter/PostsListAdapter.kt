@@ -1,12 +1,15 @@
 package com.starkindustries.instagram_clone.Adapter
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.github.marlonlom.utilities.timeago.TimeAgo
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
@@ -22,6 +25,8 @@ open class PostsListAdapter(var context_:Context,var postsList_:ArrayList<Posts>
 {
     lateinit var context:Context
     lateinit var postList: ArrayList<Posts>
+     var status:Boolean=false
+    var bookmarkStatus=false
     init {
         this.context=context_
         this.postList=postsList_
@@ -66,6 +71,40 @@ open class PostsListAdapter(var context_:Context,var postsList_:ArrayList<Posts>
         })
         Picasso.get().load(postList.get(position).postDownloadUrl).into(holder.postImage)
         holder.postCaption.setText(postList.get(position).caption)
-        holder.postUploadtiming.setText(postList.get(position).time)
+        holder.postUploadtiming.setText(TimeAgo.using(postList.get(position).time.toLong()))
+        holder.likeButton.setOnClickListener()
+        {
+            if(status)
+            {
+                holder.likeButton.setImageResource(R.drawable.heart_plain)
+                status=false
+            }
+            else
+            {
+                holder.likeButton.setImageResource(R.drawable.heart_red)
+                status=true
+            }
+        }
+        holder.bookmarkButton.setOnClickListener()
+        {
+            if(bookmarkStatus)
+            {
+                holder.bookmarkButton.setImageResource(R.drawable.bookmark_plain)
+                Toast.makeText(context, "Post Removed from collection.", Toast.LENGTH_SHORT).show()
+                bookmarkStatus=false
+            }
+            else{
+                holder.bookmarkButton.setImageResource(R.drawable.bookmark_done)
+                Toast.makeText(context, "Post added to collection.", Toast.LENGTH_SHORT).show()
+                bookmarkStatus=true
+            }
+        }
+        holder.shareButton.setOnClickListener()
+        {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.setType("text/plain")
+            intent.putExtra(Intent.EXTRA_TEXT,postList.get(position).postDownloadUrl)
+            context.startActivity(Intent.createChooser(intent,"Share via!!"))
+        }
     }
 }

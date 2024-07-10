@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.starkindustries.instagram_clone.Keys.Keys
+import com.starkindustries.instagram_clone.Model.UserProfile
 import com.starkindustries.instagram_clone.R
 import com.starkindustries.instagram_clone.databinding.ActivityRegisterBinding
 class RegisterActivity : AppCompatActivity() {
@@ -146,12 +147,14 @@ class RegisterActivity : AppCompatActivity() {
                                 map.put(Keys.NAME,binding.registerName.text.toString().trim())
                                 map.put(Keys.EMAIL,binding.registerEmail.text.toString().trim())
                                 map.put(Keys.PHONE_NO,binding.registerPhoneNo.text.toString().trim())
-                                map.put(Keys.PHOTO_URI,binding.registerProfileImageViewer.getTag().toString().trim())
                                 map.put(Keys.DOWNLOAD_URL,uri.toString().trim())
                                 map.put(Keys.USERNAME,binding.registerUsername.text.toString().trim())
                                 map.put(Keys.PASSWORD,binding.registerPassword.text.toString().trim())
                                 map.put(Keys.SIGNIN_TYPE,Keys.EMAIL_AND_PASSWORD_SIGNIN_TYPE)
-                                docrefrence.set(map).addOnCompleteListener()
+                                val userprofile:UserProfile=
+                                    UserProfile(binding.registerName.text.toString().trim(),binding.registerEmail.text.toString().trim(),binding.registerPhoneNo.text.toString().trim(),binding.registerUsername.text.toString().trim()
+                                    ,binding.registerPassword.text.toString().trim(),uri.toString().trim(),Keys.EMAIL_AND_PASSWORD_SIGNIN_TYPE)
+                                docrefrence.set(userprofile).addOnCompleteListener()
                                 {
                                     if(it.isSuccessful)
                                     {

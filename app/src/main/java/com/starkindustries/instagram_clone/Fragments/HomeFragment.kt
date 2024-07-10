@@ -1,5 +1,6 @@
 package com.starkindustries.instagram_clone.Fragments
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,20 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.toObject
+import com.squareup.picasso.Picasso
+import com.starkindustries.instagram_clone.Adapter.FollowListAdapter
 import com.starkindustries.instagram_clone.Adapter.PostsListAdapter
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.Model.Posts
+import com.starkindustries.instagram_clone.Model.UserProfile
 import com.starkindustries.instagram_clone.R
+import de.hdodenhof.circleimageview.CircleImageView
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -31,10 +41,11 @@ class HomeFragment : Fragment() {
     lateinit var postsRecyclerView:RecyclerView
     lateinit var auth:FirebaseAuth
     lateinit var user: FirebaseUser
+    lateinit var registerProfileImageViewer:CircleImageView
+    lateinit var followRecyclerView:RecyclerView
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -43,10 +54,7 @@ class HomeFragment : Fragment() {
             setHasOptionsMenu(true)
         }
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view:View =  inflater.inflate(R.layout.fragment_home, container, false)
         homeToolbar=view.findViewById(R.id.homeToolbar)
@@ -54,6 +62,8 @@ class HomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setTitle("Instagram")
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         postsRecyclerView=view.findViewById(R.id.postsRecyclerView)
+        followRecyclerView=view.findViewById(R.id.followRecyclerView)
+        registerProfileImageViewer=view.findViewById(R.id.registerProfileImageViewer)
         auth=FirebaseAuth.getInstance()
         user=auth.currentUser!!
         Firebase.firestore.collection(user.uid+Keys.POSTS).get().addOnSuccessListener {
@@ -63,13 +73,37 @@ class HomeFragment : Fragment() {
                 val post = posts.toObject(Posts::class.java)
                 postsList.add(post!!)
             }
-            postsRecyclerView.layoutManager=LinearLayoutManager(requireContext())
+            postsRecyclerView.layoutManager=LinearLayoutManager(context)
             postsRecyclerView.adapter=PostsListAdapter(requireContext(),postsList)
         }.addOnFailureListener {
-
+            Log.d("ErrorListner"," "+it.message.toString().trim())
+        }
+                Firebase.firestore.collection(user.uid+Keys.FOLLOW).get().addOnSuccessListener {
+            val List:ArrayList<UserProfile> = ArrayList<UserProfile>()
+            for(posts in it.documents)
+            {
+                val post = posts.toObject<UserProfile>()
+                List.add(post!!)
+            }
+            followRecyclerView.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            followRecyclerView.adapter=FollowListAdapter(requireContext(),List)
+        }.addOnFailureListener {
+            Log.d("ErrorListner"," "+it.message.toString().trim())
         }
         return view
     }
+    override fun onStart() {
+        super.onStart()
+        auth=FirebaseAuth.getInstance()
+        user=auth.currentUser!!
+        Firebase.firestore.collection(Keys.COLLECTION_NAME).document(user.uid).addSnapshotListener(object :EventListener<DocumentSnapshot>{
+            override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+                registerProfileImageViewer= view?.findViewById(R.id.registerProfileImageViewer)!!
+                Picasso.get().load(user.photoUrl).into(registerProfileImageViewer)
+            }
+        })
+    }
+
     companion object {
         /**
          * Use this factory method to create a new instance of

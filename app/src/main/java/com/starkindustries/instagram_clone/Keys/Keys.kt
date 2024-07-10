@@ -30,5 +30,6 @@ class Keys
         const val REELS_COLLECTION="REELS_COLLECTIONS"
         const val VIDEO_REQ_CODE=102
         const val CUSTOM_REELS="CUSTOM_REELS"
+        const val FOLLOW="FOLLOW"
     }
 }
