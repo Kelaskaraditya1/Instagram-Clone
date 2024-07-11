@@ -31,5 +31,13 @@ class Keys
         const val VIDEO_REQ_CODE=102
         const val CUSTOM_REELS="CUSTOM_REELS"
         const val FOLLOW="FOLLOW"
+        const val POST_IMAGE_GALLERY_REQ=103
+        const val PROFILE_IMAGE_GALLERY_REQ=104
+        const val CUSTOM_POSTS="CUSTOM_POSTS"
+        const val POSTS_FOLDER="POSTS_FOLDER"
+        const val PROFILE_IMAGE_FOLDER="PROFILE_IMAGE_FOLDER"
+        const val POSTS_SHARED_PREFRENCES_NAME="POSTS_SHARED_PREFRENCES"
+        const val PROFILE_URL="PROFILE_URL"
+        const val POST_URL="POST_URL"
     }
 }

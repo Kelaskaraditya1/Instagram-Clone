@@ -18,13 +18,14 @@ import com.google.firebase.firestore.firestore
 import com.squareup.picasso.Picasso
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.Model.Posts
+import com.starkindustries.instagram_clone.Model.UserPost
 import com.starkindustries.instagram_clone.R
 import de.hdodenhof.circleimageview.CircleImageView
 
-open class PostsListAdapter(var context_:Context,var postsList_:ArrayList<Posts>) :RecyclerView.Adapter<PostsListAdapter.ViewHolder>()
+open class PostsListAdapter(var context_:Context,var postsList_:ArrayList<UserPost>) :RecyclerView.Adapter<PostsListAdapter.ViewHolder>()
 {
     lateinit var context:Context
-    lateinit var postList: ArrayList<Posts>
+    lateinit var postList: ArrayList<UserPost>
      var status:Boolean=false
     var bookmarkStatus=false
     init {
@@ -63,15 +64,11 @@ open class PostsListAdapter(var context_:Context,var postsList_:ArrayList<Posts>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Firebase.firestore.collection(Keys.COLLECTION_NAME).document(postList.get(position).uid).addSnapshotListener(object :EventListener<DocumentSnapshot>{
-            override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
-                Picasso.get().load(value?.getString(Keys.DOWNLOAD_URL)).into(holder.postProfileImage)
-                holder.postProfileName.setText(value?.getString(Keys.USERNAME))
-            }
-        })
+        Picasso.get().load(postList.get(position).profileImageDownloadUrl).into(holder.postProfileImage)
+        holder.postProfileName.setText(postList.get(position).name)
         Picasso.get().load(postList.get(position).postDownloadUrl).into(holder.postImage)
         holder.postCaption.setText(postList.get(position).caption)
-        holder.postUploadtiming.setText(TimeAgo.using(postList.get(position).time.toLong()))
+        holder.postUploadtiming.setText(postList.get(position).time)
         holder.likeButton.setOnClickListener()
         {
             if(status)

@@ -65,7 +65,6 @@ class ReelsFragment : Fragment() {
         reelsList= ArrayList<ReelsModel>()
         docRefrence=firebaseFirestore.collection(user.uid+Keys.CUSTOM_REELS)
         docRefrence.get().addOnSuccessListener {
-            reelsList.clear()
             for(reel in it.documents)
             {
                 val reels: ReelsModel? = reel.toObject<ReelsModel>()
@@ -73,7 +72,7 @@ class ReelsFragment : Fragment() {
                     reelsList.add(reels)
                 }
             }
-            Log.d("ValueListner"," "+reelsList.get(0).reelName)
+            Log.d("ValueListner"," "+reelsList.get(0).downlloadUrl)
             viewPager.adapter=ReelsAdapter(requireContext(),reelsList)
         }.addOnFailureListener {
             Log.d("ErrorListner"," "+it.message.toString().trim())

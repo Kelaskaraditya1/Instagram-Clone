@@ -22,6 +22,7 @@ import com.starkindustries.instagram_clone.Adapter.FollowListAdapter
 import com.starkindustries.instagram_clone.Adapter.PostsListAdapter
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.Model.Posts
+import com.starkindustries.instagram_clone.Model.UserPost
 import com.starkindustries.instagram_clone.Model.UserProfile
 import com.starkindustries.instagram_clone.R
 import de.hdodenhof.circleimageview.CircleImageView
@@ -57,20 +58,20 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view:View =  inflater.inflate(R.layout.fragment_home, container, false)
-        homeToolbar=view.findViewById(R.id.homeToolbar)
-        (activity as AppCompatActivity).setSupportActionBar(homeToolbar)
-        (activity as AppCompatActivity).supportActionBar?.setTitle("Instagram")
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        homeToolbar=view.findViewById(R.id.homeToolbar)
+//        (activity as AppCompatActivity).setSupportActionBar(homeToolbar)
+//        (activity as AppCompatActivity).supportActionBar?.setTitle("Instagram")
+//        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         postsRecyclerView=view.findViewById(R.id.postsRecyclerView)
         followRecyclerView=view.findViewById(R.id.followRecyclerView)
         registerProfileImageViewer=view.findViewById(R.id.registerProfileImageViewer)
         auth=FirebaseAuth.getInstance()
         user=auth.currentUser!!
-        Firebase.firestore.collection(user.uid+Keys.POSTS).get().addOnSuccessListener {
-            val postsList:ArrayList<Posts> = ArrayList<Posts>()
+        Firebase.firestore.collection(user.uid+Keys.POSTS_FOLDER).get().addOnSuccessListener {
+            val postsList:ArrayList<UserPost> = ArrayList<UserPost>()
             for(posts in it.documents)
             {
-                val post = posts.toObject(Posts::class.java)
+                val post = posts.toObject(UserPost::class.java)
                 postsList.add(post!!)
             }
             postsRecyclerView.layoutManager=LinearLayoutManager(context)
@@ -83,7 +84,6 @@ class HomeFragment : Fragment() {
             for(posts in it.documents)
             {
                 val post = posts.toObject<UserProfile>()
-                Log.d("ValueListner","name:"+post?.name.toString().trim())
                 List.add(post!!)
             }
             followRecyclerView.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
