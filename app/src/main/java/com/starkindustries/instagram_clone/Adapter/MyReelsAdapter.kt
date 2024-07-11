@@ -44,7 +44,7 @@ class MyReelsAdapter (var context_:Context,var videoLists_:ArrayList<Reels>,var 
         Glide.with(context).load(videosList.get(position).reelDownloadUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.reelsImageView)
         holder.reelsImageView.setOnLongClickListener(object :View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
-                itemClickListner.onRowLongClick(holder.adapterPosition)
+                itemClickListner.onRowLongClick(position)
                 return true
             }
 

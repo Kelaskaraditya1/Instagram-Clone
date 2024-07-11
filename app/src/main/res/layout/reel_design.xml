@@ -38,13 +38,14 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:src="@drawable/profile">
+            android:src="@drawable/profile"
+            android:paddingEnd="20dp">
         </de.hdodenhof.circleimageview.CircleImageView>
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/reelCaption"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:text="I am Ironman"
             android:textAppearance="@color/white"
             android:textSize="20sp"

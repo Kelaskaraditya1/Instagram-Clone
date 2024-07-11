@@ -1,5 +1,4 @@
 package com.starkindustries.instagram_clone.Fragments
-
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import com.squareup.picasso.Picasso
 import com.starkindustries.instagram_clone.Adapter.MyPostsAdapter
@@ -100,7 +100,6 @@ class MyReelsFragment : Fragment(),MyReelsAdapter.OnItemClickListner {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
-         *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
          * @return A new instance of fragment MyReelsFragment.
@@ -117,27 +116,33 @@ class MyReelsFragment : Fragment(),MyReelsAdapter.OnItemClickListner {
     }
 
     override fun onRowLongClick(position: Int) {
-        val dialog = Dialog(requireContext())
-        firebaseFirestore= FirebaseFirestore.getInstance()
-        docRefrence=firebaseFirestore.collection(user.uid!!+ Keys.REELS)
-        reelsList= ArrayList<Reels>()
-        docRefrence.get().addOnSuccessListener {
-            val obj: Reels? =it.documents.get(position).toObject<Reels>()
-            dialog.setContentView(R.layout.reel_design)
-            var viedeoView: VideoView? = view?.findViewById(R.id.videoView)
-//        val reelProfileImage:CircleImageView=view?.findViewById(R.id.reelProfileImage)!!
-//        val reelCaption:AppCompatTextView=view?.findViewById(R.id.reelCaption)!!
-//        val progressBar:ProgressBar = view?.findViewById(R.id.progressBar)!!
-//        Picasso.get().load(Firebase.auth.currentUser?.photoUrl).into(reelProfileImage)
-//        reelCaption.setText(reelsList.get(position).caption)
-            viedeoView?.setVideoPath(obj?.reelDownloadUrl)
-            viedeoView?.setOnPreparedListener()
+        var dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.reel_design)
+        var videoView:VideoView
+        var reelProfileImage:CircleImageView
+        var reelCaption:AppCompatTextView
+        var progressBar:ProgressBar
+        videoView=dialog.findViewById(R.id.videoView)
+        reelProfileImage=dialog.findViewById(R.id.reelProfileImage)
+        reelCaption=dialog.findViewById(R.id.reelCaption)
+        progressBar=dialog.findViewById(R.id.progressBar)
+        Firebase.firestore.collection(Firebase.auth.currentUser?.uid+Keys.REELS).get().addOnSuccessListener {
+            val ReelsList:ArrayList<Reels> = ArrayList<Reels>()
+            for(reels in it.documents)
             {
-//            progressBar.visibility=View.GONE
-                viedeoView.start()
+                val reel = reels.toObject<Reels>()
+                ReelsList.add(reel!!)
             }
+            videoView.setVideoPath(ReelsList.get(position).reelDownloadUrl)
+            Picasso.get().load(Firebase.auth.currentUser?.photoUrl).into(reelProfileImage)
+            reelCaption.setText(reelsList.get(position).caption)
             dialog.show()
+            videoView.setOnPreparedListener(){
+                progressBar.visibility=View.GONE
+                it.start()
+            }
+        }.addOnFailureListener {
+            Log.d("ErrorListner"," "+it.message.toString().trim())
         }
-
     }
 }
