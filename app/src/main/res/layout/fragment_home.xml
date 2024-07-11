@@ -17,14 +17,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintVertical_bias="0">
     </com.google.android.material.appbar.MaterialToolbar>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="170dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,8 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
-            </de.hdodenhof.circleimageview.CircleImageView>
+                app:layout_constraintVertical_bias="0.0"></de.hdodenhof.circleimageview.CircleImageView>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/registerProfileImage"
@@ -49,21 +50,20 @@
                 android:src="@drawable/plus"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.18"
+                app:layout_constraintHorizontal_bias="0.171"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.75">
-            </de.hdodenhof.circleimageview.CircleImageView>
+                app:layout_constraintVertical_bias="0.435"></de.hdodenhof.circleimageview.CircleImageView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/followRecyclerView"
                 android:layout_width="0dp"
-                android:layout_height="90dp"
+                android:layout_height="160dp"
+                android:layout_marginStart="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/registerProfileImageViewer"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="15dp">
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toTopOf="parent"></androidx.recyclerview.widget.RecyclerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
     <View

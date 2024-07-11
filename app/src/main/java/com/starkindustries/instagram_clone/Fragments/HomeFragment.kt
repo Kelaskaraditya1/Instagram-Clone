@@ -83,6 +83,7 @@ class HomeFragment : Fragment() {
             for(posts in it.documents)
             {
                 val post = posts.toObject<UserProfile>()
+                Log.d("ValueListner","name:"+post?.name.toString().trim())
                 List.add(post!!)
             }
             followRecyclerView.layoutManager=LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)

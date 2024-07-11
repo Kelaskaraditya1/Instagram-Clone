@@ -3,6 +3,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -10,8 +11,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.starkindustries.instagram_clone.Fragments.MyReelsFragment
 import com.starkindustries.instagram_clone.Model.Reels
 import com.starkindustries.instagram_clone.R
-class MyReelsAdapter (var context_:Context,var videoLists_:ArrayList<Reels>):RecyclerView.Adapter<MyReelsAdapter.ViewHolder>()
+class MyReelsAdapter (var context_:Context,var videoLists_:ArrayList<Reels>,var itemClickListner:OnItemClickListner):RecyclerView.Adapter<MyReelsAdapter.ViewHolder>()
 {
+    interface OnItemClickListner
+    {
+        fun onRowLongClick(position: Int)
+    }
     lateinit var context: Context
     lateinit var videosList:ArrayList<Reels>
     init {
@@ -35,7 +40,14 @@ class MyReelsAdapter (var context_:Context,var videoLists_:ArrayList<Reels>):Rec
         return videosList.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position:Int) {
         Glide.with(context).load(videosList.get(position).reelDownloadUrl).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.reelsImageView)
+        holder.reelsImageView.setOnLongClickListener(object :View.OnLongClickListener{
+            override fun onLongClick(v: View?): Boolean {
+                itemClickListner.onRowLongClick(holder.adapterPosition)
+                return true
+            }
+
+        })
     }
 }

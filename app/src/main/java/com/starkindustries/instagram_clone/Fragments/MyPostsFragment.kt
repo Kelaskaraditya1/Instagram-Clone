@@ -1,24 +1,31 @@
 package com.starkindustries.instagram_clone.Fragments
 
+import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
+import com.squareup.picasso.Picasso
 import com.starkindustries.instagram_clone.Adapter.MyPostsAdapter
 import com.starkindustries.instagram_clone.Keys.Keys
 import com.starkindustries.instagram_clone.Model.Posts
 import com.starkindustries.instagram_clone.R
+import de.hdodenhof.circleimageview.CircleImageView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +37,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [MyPostsFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MyPostsFragment : Fragment() {
+class MyPostsFragment : Fragment(),MyPostsAdapter.OnItemClickListner {
     lateinit var recyclerView:RecyclerView
     lateinit var auth:FirebaseAuth
     lateinit var user:FirebaseUser
@@ -49,7 +56,6 @@ class MyPostsFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,7 +78,7 @@ class MyPostsFragment : Fragment() {
             if(postsList.size!=0)
             {
                 noPosts.visibility=View.GONE
-                val adapter=MyPostsAdapter(requireContext(),postsList)
+                val adapter=MyPostsAdapter(requireContext(),postsList,this)
                 recyclerView.layoutManager=StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
                 recyclerView.adapter=adapter
             }
@@ -104,5 +110,18 @@ class MyPostsFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+    override fun onRowLongClick(position: Int) {
+        val dialog:Dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.single_post_design)
+        var postProfileImage:CircleImageView=dialog.findViewById(R.id.postProfileImage)
+        var postProfileName:AppCompatTextView=dialog.findViewById(R.id.postProfileName)
+        var postImage:AppCompatImageView=dialog.findViewById(R.id.postImage)
+        var postCaption:AppCompatTextView=dialog.findViewById(R.id.postCaption)
+        Picasso.get().load(Firebase.auth.currentUser?.photoUrl).into(postProfileImage)
+        Picasso.get().load(postsList.get(position).postDownloadUrl).into(postImage)
+        postCaption.setText(postsList.get(position).caption)
+        dialog.show()
+
     }
 }
