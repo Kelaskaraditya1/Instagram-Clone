@@ -81,7 +81,7 @@ class ReelsActivity : AppCompatActivity() {
             docRefrence.addSnapshotListener(object: EventListener<DocumentSnapshot> {
                 override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
                     storageRefrence=FirebaseStorage.getInstance().reference
-                    childRefrence=storageRefrence.child(value?.getString(Keys.NAME)+"/"+user.uid+"/"+Keys.REELS+"/"+binding.Reelstitle.text.toString().trim())
+                    childRefrence=storageRefrence.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.PROFILE_REELS+"/"+binding.Reelstitle.text.toString().trim())
                     childRefrence.putFile(reelUri).addOnSuccessListener {
                         it.storage.downloadUrl.addOnSuccessListener {
                             val map = mutableMapOf<String,Any>()

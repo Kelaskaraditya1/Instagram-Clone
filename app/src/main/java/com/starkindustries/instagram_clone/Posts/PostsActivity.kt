@@ -78,7 +78,7 @@ class PostsActivity : AppCompatActivity() {
                 override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
                     storageRefrence=FirebaseStorage.getInstance().reference
                     val name:String = value?.getString(Keys.USERNAME)!!
-                    childRefrence=storageRefrence.child(value?.getString(Keys.NAME)+"/"+user.uid+"/"+Keys.POSTS+"/"+binding.title.text.toString().trim())
+                    childRefrence=storageRefrence.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.PROFILE_POSTS+"/"+binding.title.text.toString().trim())
                     childRefrence.putFile(postUri).addOnSuccessListener {
                         it.storage.downloadUrl.addOnSuccessListener {
                             val map = mutableMapOf<String,Any>()

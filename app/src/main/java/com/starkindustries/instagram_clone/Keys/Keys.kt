@@ -42,5 +42,7 @@ class Keys
         const val REEL_UPLOAD_REQ=105
         const val REEL_PROFILE_IMAGES="REEL_PROFILE_IMAEGS"
         const val REELS_FOLDER="REELS_FOLDER"
+        const val PROFILE_REELS="PROFILE_REELS"
+        const val PROFILE_POSTS="PROFILE_POSTS"
     }
 }
