@@ -72,7 +72,7 @@ class ReelsFragment : Fragment() {
                     reelsList.add(reels)
                 }
             }
-            Log.d("ValueListner"," "+reelsList.get(0).downlloadUrl)
+            Log.d("ValueListner"," "+reelsList.get(0).downlloadUrl  )
             viewPager.adapter=ReelsAdapter(requireContext(),reelsList)
         }.addOnFailureListener {
             Log.d("ErrorListner"," "+it.message.toString().trim())

@@ -67,85 +67,87 @@ class ReelsUploadActivity : AppCompatActivity() {
             startActivityForResult(intent,Keys.PROFILE_IMAGE_GALLERY_REQ)
         }
         binding.videoButton.setOnClickListener()
-        {val intent = Intent(Intent.ACTION_PICK)
-            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            startActivityForResult(intent,Keys.POST_IMAGE_GALLERY_REQ)
+        {val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.setType("video/*")
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            startActivityForResult(intent,Keys.REEL_UPLOAD_REQ)
         }
-        binding.uploadProfileUrl.setOnClickListener()
-        {
-            storageReference = FirebaseStorage.getInstance().reference
-            childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.CUSTOM_POSTS+"/"+Keys.PROFILE_IMAGE_FOLDER+"/"+binding.reelName.text.toString().trim())
-            childRefrence.putFile(profileImageUri).addOnSuccessListener {
-                it.storage.downloadUrl.addOnSuccessListener {
-                    profileUrl=it.toString().trim()
-                    editor.putString(Keys.PROFILE_URL,profileUrl)
-                    editor.commit()
-                }.addOnFailureListener {
-                    Log.d("ErrorListner"," "+it.message.toString().trim())
-                }
-            }.addOnFailureListener {
-                Log.d("ErrorListner"," "+it.message.toString().trim())
-            }
-        }
-        binding.uploadPostUrl.setOnClickListener()
-        {
-            storageReference = FirebaseStorage.getInstance().reference
-            childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.CUSTOM_POSTS+"/"+Keys.POSTS_FOLDER+"/"+binding.reelTitle.text.toString().trim())
-            childRefrence.putFile(postImageUri).addOnSuccessListener {
-                it.storage.downloadUrl.addOnSuccessListener {
-                    postUrl=it.toString().trim()
-                    editor.putString(Keys.POST_URL,postUrl)
-                    editor.commit()
-                }.addOnFailureListener {
-                    Log.d("ErrorListner"," "+it.message.toString().trim())
-                }
-            }.addOnFailureListener {
-                Log.d("ErrorListner"," "+it.message.toString().trim())
-            }
-        }
-        binding.uploadButton.setOnClickListener()
-        {
-//            storageReference=FirebaseStorage.getInstance().reference
-//            childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.REELS+"/"+profileImageUri.toString().trim())
+//        binding.uploadProfileUrl.setOnClickListener()
+//        {
+//            storageReference = FirebaseStorage.getInstance().reference
+//            childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.CUSTOM_POSTS+"/"+Keys.PROFILE_IMAGE_FOLDER+"/"+binding.reelName.text.toString().trim())
 //            childRefrence.putFile(profileImageUri).addOnSuccessListener {
 //                it.storage.downloadUrl.addOnSuccessListener {
-//                    imaegurl=it.toString()
+//                    profileUrl=it.toString().trim()
+//                    editor.putString(Keys.PROFILE_URL,profileUrl)
+//                    editor.commit()
 //                }.addOnFailureListener {
 //                    Log.d("ErrorListner"," "+it.message.toString().trim())
 //                }
 //            }.addOnFailureListener {
 //                Log.d("ErrorListner"," "+it.message.toString().trim())
 //            }
-//            storageReference=FirebaseStorage.getInstance().reference
-//            childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.REELS+"/"+binding.reelName.text.toString().trim())
-//            childRefrence.putFile(reeluri).addOnSuccessListener {
+//        }
+//        binding.uploadPostUrl.setOnClickListener()
+//        {
+//            storageReference = FirebaseStorage.getInstance().reference
+//            childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.CUSTOM_POSTS+"/"+Keys.POSTS_FOLDER+"/"+binding.reelTitle.text.toString().trim())
+//            childRefrence.putFile(postImageUri).addOnSuccessListener {
 //                it.storage.downloadUrl.addOnSuccessListener {
-//                    firebaseFirestore=FirebaseFirestore.getInstance()
-//                    docRefrence=firebaseFirestore.collection(Keys.CUSTOM_REELS).document(user.uid)
-//                    val reel = ReelsModel( binding.reelName.text.toString().trim(),imaegurl, it.toString(), binding.captionEdittext.text.toString().trim())
-//                    docRefrence.set(reel!!).addOnSuccessListener {
-//                        docRefrence=firebaseFirestore.collection(user.uid!!+Keys.CUSTOM_REELS).document()
-//                        docRefrence.set(reel).addOnSuccessListener {
-//                            val view = this.currentFocus
-//                            if(view!=null)
-//                            {
-//                                val manager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//                                manager.hideSoftInputFromWindow(view.windowToken,0)
-//                            }
-//
-//                            Toast.makeText(applicationContext, "uploaded successfully!!", Toast.LENGTH_SHORT).show()
-//                        }.addOnFailureListener {
-//                            Log.d("ErrorListner"," "+it.message.toString().trim())
-//                        }
-//                    }.addOnFailureListener {
-//                        Log.d("ErrorListner"," "+it.message.toString().trim())
-//                    }
+//                    postUrl=it.toString().trim()
+//                    editor.putString(Keys.POST_URL,postUrl)
+//                    editor.commit()
 //                }.addOnFailureListener {
 //                    Log.d("ErrorListner"," "+it.message.toString().trim())
 //                }
 //            }.addOnFailureListener {
 //                Log.d("ErrorListner"," "+it.message.toString().trim())
 //            }
+//        }
+        binding.uploadButton.setOnClickListener()
+        {
+            storageReference=FirebaseStorage.getInstance().reference
+            childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.CUSTOM_REELS +"/"+Keys.REEL_PROFILE_IMAGES+"/"+profileImageUri.toString().trim())
+            childRefrence.putFile(profileImageUri).addOnSuccessListener {
+                it.storage.downloadUrl.addOnSuccessListener {
+                   var imageUrl=it.toString()
+                    storageReference=FirebaseStorage.getInstance().reference
+                    childRefrence=storageReference.child(user.displayName.toString().trim()+"/"+user.uid+"/"+Keys.CUSTOM_REELS+"/"+Keys.REELS_FOLDER+"/"+binding.reelName.text.toString().trim())
+                    childRefrence.putFile(postImageUri).addOnSuccessListener {
+                        it.storage.downloadUrl.addOnSuccessListener {
+                            firebaseFirestore=FirebaseFirestore.getInstance()
+                            docRefrence=firebaseFirestore.collection(Keys.CUSTOM_REELS).document(user.uid)
+                            val reel = ReelsModel( binding.reelName.text.toString().trim(),imageUrl, it.toString(), binding.captionEdittext.text.toString().trim())
+                            docRefrence.set(reel!!).addOnSuccessListener {
+                                docRefrence=firebaseFirestore.collection(user.uid!!+Keys.CUSTOM_REELS).document()
+                                docRefrence.set(reel).addOnSuccessListener {
+                                    val view = this.currentFocus
+                                    if(view!=null)
+                                    {
+                                        val manager:InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                                        manager.hideSoftInputFromWindow(view.windowToken,0)
+                                    }
+
+                                    Toast.makeText(applicationContext, "uploaded successfully!!", Toast.LENGTH_SHORT).show()
+                                }.addOnFailureListener {
+                                    Log.d("ErrorListner"," "+it.message.toString().trim())
+                                }
+                            }.addOnFailureListener {
+                                Log.d("ErrorListner"," "+it.message.toString().trim())
+                            }
+                        }.addOnFailureListener {
+                            Log.d("ErrorListner"," "+it.message.toString().trim())
+                        }
+                    }.addOnFailureListener {
+                        Log.d("ErrorListner"," "+it.message.toString().trim())
+                    }
+                }.addOnFailureListener {
+                    Log.d("ErrorListner"," "+it.message.toString().trim())
+                }
+            }.addOnFailureListener {
+                Log.d("ErrorListner"," "+it.message.toString().trim())
+            }
+
 //            dbRefrence=FirebaseDatabase.getInstance().reference
 //            val postKey: String? = dbRefrence.child(Keys.POSTS).push().key
 //            if(postKey!=null)
@@ -167,14 +169,14 @@ class ReelsUploadActivity : AppCompatActivity() {
 //                    Log.d("ErrorListner"," "+it.message.toString().trim())
 //                }
 //            }
-            firebaseFirestore=FirebaseFirestore.getInstance()
-            docRefrence=firebaseFirestore.collection(user.uid+Keys.POSTS_FOLDER).document()
-            docRefrence.set(post).addOnSuccessListener {
-                editor.clear()
-                editor.commit()
-            }.addOnFailureListener {
-
-            }
+//            firebaseFirestore=FirebaseFirestore.getInstance()
+//            docRefrence=firebaseFirestore.collection(user.uid+Keys.POSTS_FOLDER).document()
+//            docRefrence.set(post).addOnSuccessListener {
+//                editor.clear()
+//                editor.commit()
+//            }.addOnFailureListener {
+//
+//            }
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -190,7 +192,7 @@ class ReelsUploadActivity : AppCompatActivity() {
             {
                 profileImageUri=data?.data!!
             }
-            else if(requestCode==Keys.POST_IMAGE_GALLERY_REQ)
+            else if(requestCode==Keys.REEL_UPLOAD_REQ)
             {
                 postImageUri=data?.data!!
             }

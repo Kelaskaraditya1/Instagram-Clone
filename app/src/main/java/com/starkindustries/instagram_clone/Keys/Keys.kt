@@ -39,5 +39,8 @@ class Keys
         const val POSTS_SHARED_PREFRENCES_NAME="POSTS_SHARED_PREFRENCES"
         const val PROFILE_URL="PROFILE_URL"
         const val POST_URL="POST_URL"
+        const val REEL_UPLOAD_REQ=105
+        const val REEL_PROFILE_IMAGES="REEL_PROFILE_IMAEGS"
+        const val REELS_FOLDER="REELS_FOLDER"
     }
 }

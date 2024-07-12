@@ -71,6 +71,7 @@ class ReelsActivity : AppCompatActivity() {
         }
         binding.reelPostButton.setOnClickListener()
         {
+            binding.rellsprogressBar.visibility=View.VISIBLE
             progressDialog= ProgressDialog(applicationContext)
             progressDialog.setTitle("Uploading your reel")
             auth=FirebaseAuth.getInstance()
@@ -102,6 +103,7 @@ class ReelsActivity : AppCompatActivity() {
                                             progressDialog.dismiss()
                                             binding.Reelstitle.setText("")
                                             binding.Reelscaption.setText(" ")
+                                            binding.rellsprogressBar.visibility=View.GONE
                                             val intent = Intent(applicationContext,DashBoardActivity::class.java)
                                             startActivity(intent)
                                             Toast.makeText(applicationContext, "uploaded in firebasefirestore successfully", Toast.LENGTH_SHORT).show()

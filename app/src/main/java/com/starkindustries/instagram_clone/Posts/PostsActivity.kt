@@ -69,6 +69,7 @@ class PostsActivity : AppCompatActivity() {
         }
         binding.postButton.setOnClickListener()
         {
+            binding.postsprogressBar.visibility=View.VISIBLE
             auth=FirebaseAuth.getInstance()
             user=auth.currentUser!!
             firebaseFireStore=FirebaseFirestore.getInstance()
@@ -100,6 +101,7 @@ class PostsActivity : AppCompatActivity() {
                                             binding.viewPost.visibility=View.GONE
                                             binding.title.setText("")
                                             binding.caption.setText(" ")
+                                            binding.postsprogressBar.visibility=View.GONE
                                             val intent = Intent(applicationContext,DashBoardActivity::class.java)
                                             startActivity(intent)
                                             Toast.makeText(applicationContext, "uploaded in firebasefirestore successfully", Toast.LENGTH_SHORT).show()

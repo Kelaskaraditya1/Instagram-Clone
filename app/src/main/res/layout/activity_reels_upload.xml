@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Post Image"
+                android:text="Post Video"
                 android:textSize="20sp"
                 android:textAlignment="center"
                 android:textAppearance="@color/black"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Profile Image Button"
+                android:text="Profile Image "
                 android:textSize="20sp"
                 android:textAlignment="center"
                 android:textAppearance="@color/black"
@@ -74,30 +74,6 @@
                 android:textColorHint="@color/black">
             </androidx.appcompat.widget.AppCompatEditText>
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/uploadPostUrl"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Upload Posts"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:textAppearance="@color/black"
-                android:textColor="@color/black"
-                android:layout_marginTop="20dp">
-            </androidx.appcompat.widget.AppCompatButton>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/uploadProfileUrl"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Upload Profile"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:textAppearance="@color/black"
-                android:textColor="@color/black"
-                android:layout_marginTop="20dp">
-            </androidx.appcompat.widget.AppCompatButton>
-            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/uploadButton"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -109,8 +85,6 @@
                 android:textColor="@color/black"
                 android:layout_marginTop="20dp">
             </androidx.appcompat.widget.AppCompatButton>
-
-
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
